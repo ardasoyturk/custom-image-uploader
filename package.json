@@ -1,0 +1,28 @@
+{
+  "name": "custom-image-uploader",
+  "version": "1.0.0",
+  "description": "Basic custom image uploader ShareX or any other image uploader.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ardasoyturk/custom-image-uploader.git"
+  },
+  "keywords": [
+    "sharex",
+    "custom uploader",
+    "image uploader"
+  ],
+  "author": "ardasoyturk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ardasoyturk/custom-image-uploader/issues"
+  },
+  "homepage": "https://github.com/ardasoyturk/custom-image-uploader#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  }
+}
