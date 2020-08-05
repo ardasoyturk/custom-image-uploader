@@ -1,0 +1,9 @@
+{
+    "DestinationType": "ImageUploader, TextUploader, FileUploader",
+    "RequestURL": "https://crisis.is-inside.me/upload",
+    "FileFormName": "file",
+    "Headers": {
+        "key": "your cool key"
+    },
+    "URL": "$json:url$"
+}
