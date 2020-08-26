@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage })
 
 app.post('/upload', (req, res) => {
-  if (req.headers.key !== config.token) return res.sendStatus(403).send('Forbidden')
+  if (req.headers.key !== config.token) return res.sendStatus(403)
   upload.single(config.fieldname)(req, res => {
     let str = config.domain + req.file.filename;
     res.json({ url: str })
