@@ -16,11 +16,12 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage })
 
-app.post('/upload', upload.single(config.fieldname), (req, res) => {
-  let token = req.headers['key'];
-  if (token !== config.token) return res.sendStatus(403).send('Forbidden').end(); 
-  let str = config.domain + req.file.filename;
-  res.json({ url: str }).end()
+app.post('/upload', (req, res) => {
+  if (req.headers.key !== config.token) return res.sendStatus(403).send('Forbidden')
+  upload.single(config.fieldname)(req, res => {
+    let str = config.domain + req.file.filename;
+    res.json({ url: str })
+  }
 })
 
 function makeid(length) {
