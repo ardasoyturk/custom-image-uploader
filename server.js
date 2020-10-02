@@ -1,35 +1,36 @@
 const express = require('express');
-const multer = require('multer');
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
 const app = express();
 const config = require('./config.js');
-app.use(express.static('i'));
+app.use(fileUpload());
+app.use(express.static(config.imageDir));
 app.enable('trust proxy');
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, __dirname + '/i')
-  },
-  filename: function (req, file, cb) {
-    let str = makeid(5) + '.' + file.originalname.split('.')[1]
-    cb(null, str)
+app.post('/upload', function(req, res) {
+  const fileName = `${makeid(config.randomLength)}.${req.files[config.fieldname].name.split('.')[1]}`; 
+  if (req.headers.key === config.token) {
+    req.files[config.fieldname].mv(`./${config.imageDir}/${fileName}`, (err) => {
+      if (err) {
+          return res.status(500).json({success:false});
+      } else {
+          return res.status(200).json({success: true, url: `${config.domain}/${config.imageDir}/${fileName}`})
+      }
+    })
+  } else {
+    res.status(403).send('Forbidden');
   }
-})
-var upload = multer({ storage })
-
-app.post('/upload', (req, res) => {
-  if (req.headers.key !== config.token) return res.sendStatus(403)
-  upload.single(config.fieldname)(req, res => {
-    let str = config.domain + req.file.filename;
-    res.json({ url: str })
-  }
-})
-
+});
 function makeid(length) {
    var result = '';
    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
    var charactersLength = characters.length;
    for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+
+   if (fs.readdirSync('./'+config.imageDir).some(sa => sa.includes(result))) {
+     makeid(length);
    }
    return result;
 }

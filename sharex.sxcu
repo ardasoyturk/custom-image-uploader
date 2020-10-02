@@ -1,6 +1,6 @@
 {
     "DestinationType": "ImageUploader, TextUploader, FileUploader",
-    "RequestURL": "https://crisis.is-inside.me/upload",
+    "RequestURL": "https://yourdomain.com/upload",
     "FileFormName": "file",
     "Headers": {
         "key": "your cool key"
